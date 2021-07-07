@@ -2,7 +2,7 @@ import React from 'react'
 import Modal from "../Modal/Modal"
 import { useState } from "react"
 
-const AddButton = () => {
+const AddButton = ({ persons, setPersons }) => {
     const [modalActive, setModalActive] = useState(false)
     const [firstName, setfirstName] = useState('')
     const [lastName, setlastName] = useState('')
@@ -25,6 +25,8 @@ const AddButton = () => {
         })
         setfirstName('')
         setlastName('')
+        setPersons(persons = [...persons, person])
+
     }
     return (
         <div>
