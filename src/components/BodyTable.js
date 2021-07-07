@@ -8,6 +8,9 @@ import { FaTimes, FaUser, FaPen } from 'react-icons/fa'
 
 const BodyTable = ({ persons, setPersons }) => {
     const [modalActive, setModalActive] = useState(false)
+    const [firstName, setFirstName] = useState()
+    const [lastName, setLastName] = useState()
+    const [id, setPersonId] = useState()
 
     //Deleted person
     const deletePerson = async (id) => {
@@ -18,8 +21,31 @@ const BodyTable = ({ persons, setPersons }) => {
     }
 
     //Update person data
-    const updateUser = (id) => {
-        console.log('update', id)
+    const updatePerson = async (e) => {
+        e.preventDefault()
+        if (!firstName || !lastName) {
+            return
+        }
+        const person = {
+            firstName: firstName,
+            lastName: lastName,
+        }
+        await fetch(`http://localhost:5000/persons/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-type': 'application/json',
+            },
+            body: JSON.stringify(person),
+        })
+        fetchPersons()
+    }
+
+
+    const fetchPersons = async () => {
+        const res = await fetch('http://localhost:5000/persons')
+        const data = await res.json()
+        const persons = await data
+        setPersons(persons)
     }
 
     return (
@@ -41,7 +67,12 @@ const BodyTable = ({ persons, setPersons }) => {
                         <td>
                             <FaPen
                                 style={{ color: 'gray', cursor: 'pointer' }}
-                                onClick={() => setModalActive(true)}
+                                onClick={() => {
+                                    setFirstName(person.firstName)
+                                    setLastName(person.lastName)
+                                    setPersonId(person.id)
+                                    setModalActive(true)
+                                }}
                             />
                         </td>
                         <td>
@@ -55,12 +86,29 @@ const BodyTable = ({ persons, setPersons }) => {
             </tbody>
             <Modal active={modalActive} setActive={setModalActive}>
                 <div className='modal__header'>Редактирование сотрудника</div>
-                <button className='modal__back-link' onClick={() => setModalActive(false)}>Назад к списку</button>
-                <input className='modal__input' type='text' placeholder='Введите имя сотрудника'></input>
-                <input className='modal__input' type='text' placeholder='Введите фамилию сотрудника'></input>
-                <button className='user-list__add-btn modal__btn'>
-                    Сохранить
+                <button
+                    className='modal__back-link'
+                    onClick={() => setModalActive(false)}>
+                    Назад к списку
                 </button>
+                <form className='modal__form' onSubmit={updatePerson}>
+                    <input
+                        className='modal__input'
+                        type='text'
+                        placeholder='Введите имя сотрудника'
+                        value={firstName}
+                        onChange={(e) => setFirstName(e.target.value)} />
+                    <input
+                        className='modal__input'
+                        type='text'
+                        placeholder='Введите фамилию сотрудника'
+                        value={lastName}
+                        onChange={(e) => setLastName(e.target.value)} />
+                    <input
+                        type='submit'
+                        value='Сохранить'
+                        className='user-list__add-btn modal__btn' />
+                </form>
             </Modal>
         </>
     )

@@ -16,9 +16,9 @@
       "lastName": "Лепс"
     },
     {
-      "id": 4,
       "firstName": "Лёха",
-      "lastName": "Николаев"
+      "lastName": "Николаев",
+      "id": 4
     }
   ]
 }
