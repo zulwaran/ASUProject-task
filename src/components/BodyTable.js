@@ -8,8 +8,8 @@ import { FaTimes, FaUser, FaPen } from 'react-icons/fa'
 
 const BodyTable = ({ persons, setPersons }) => {
     const [modalActive, setModalActive] = useState(false)
-    const [firstName, setFirstName] = useState()
-    const [lastName, setLastName] = useState()
+    const [firstName, setFirstName] = useState("")
+    const [lastName, setLastName] = useState("")
     const [id, setPersonId] = useState()
 
     //Deleted person
