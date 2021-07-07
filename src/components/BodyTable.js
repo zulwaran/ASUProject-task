@@ -67,7 +67,13 @@ const BodyTable = () => {
                 ))}
             </tbody>
             <Modal active={modalActive} setActive={setModalActive}>
-                <p>Редактировать пользователя</p>
+                <div className='modal__header'>Редактирование сотрудника</div>
+                <button className='modal__back-link' onClick={() => setModalActive(false)}>Назад к списку</button>
+                <input className='modal__input' type='text' placeholder='Введите имя сотрудника'></input>
+                <input className='modal__input' type='text' placeholder='Введите фамилию сотрудника'></input>
+                <button className='user-list__add-btn modal__btn'>
+                    Сохранить
+                </button>
             </Modal>
         </>
     )
