@@ -55,11 +55,15 @@
     margin-bottom: 10px;
     margin-left: 10px;
     font-size: 12px;
-    border: none; 
+    border: none;
     outline: none;
     background-color: inherit;
     text-align: left;
     cursor: pointer;
     color: blue;
     text-decoration: underline;
+}
+
+.modal__form {
+    display: grid;
 }
