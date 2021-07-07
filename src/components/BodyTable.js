@@ -2,9 +2,6 @@ import React from 'react'
 import { useEffect, useState } from "react"
 import { FaTimes, FaUser, FaPen } from 'react-icons/fa'
 
-const deleteUser = (id) => {
-    console.log('delete', id)
-}
 
 const updateUser = (id) => {
     console.log('update', id)
@@ -26,6 +23,14 @@ const BodyTable = () => {
         const res = await fetch('http://localhost:5000/persons')
         const data = await res.json()
         return data
+    }
+
+    //Deleted person
+    const deletePerson = async (id) => {
+        await fetch(`http://localhost:5000/persons/${id}`, {
+            method: 'DELETE',
+        })
+        setPersons(persons.filter((person) => person.id !== id))
     }
 
     return (
@@ -52,7 +57,7 @@ const BodyTable = () => {
                     <td>
                         <FaTimes
                             style={{ color: 'red', cursor: 'pointer' }}
-                            onClick={() => deleteUser(person.id)}
+                            onClick={() => deletePerson(person.id)}
                         />
                     </td>
                 </tr>
