@@ -2,6 +2,8 @@ import React from 'react'
 import Modal from "../Modal/Modal"
 import { useState } from "react"
 import { FaTimes, FaUser, FaPen } from 'react-icons/fa'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 
@@ -11,6 +13,24 @@ const BodyTable = ({ persons, setPersons }) => {
     const [firstName, setFirstName] = useState("")
     const [lastName, setLastName] = useState("")
     const [id, setPersonId] = useState()
+    const notifyUpdate = () => toast.success("Данные обновлены", {
+        position: "bottom-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+    });
+    const notifyDelete = () => toast.success("Пользователь удален", {
+        position: "bottom-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+    });
 
     //Deleted person
     const deletePerson = async (id) => {
@@ -18,6 +38,7 @@ const BodyTable = ({ persons, setPersons }) => {
             method: 'DELETE',
         })
         setPersons(persons.filter((person) => person.id !== id))
+        notifyDelete()
     }
 
     //Update person data
@@ -38,6 +59,7 @@ const BodyTable = ({ persons, setPersons }) => {
             body: JSON.stringify(person),
         })
         fetchPersons()
+        notifyUpdate()
     }
 
 
@@ -110,6 +132,16 @@ const BodyTable = ({ persons, setPersons }) => {
                         className='user-list__add-btn modal__btn' />
                 </form>
             </Modal>
+            <ToastContainer
+                position="bottom-right"
+                autoClose={3000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover />
         </>
     )
 }

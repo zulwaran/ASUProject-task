@@ -1,11 +1,22 @@
 import React from 'react'
 import Modal from "../Modal/Modal"
 import { useState } from "react"
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const AddButton = ({ persons, setPersons }) => {
     const [modalActive, setModalActive] = useState(false)
     const [firstName, setfirstName] = useState('')
     const [lastName, setlastName] = useState('')
+    const notifyCreate = () => toast.success("Пользователь добавлен", {
+        position: "bottom-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+    });
 
     const addPerson = async (e) => {
         e.preventDefault()
@@ -26,6 +37,7 @@ const AddButton = ({ persons, setPersons }) => {
         setfirstName('')
         setlastName('')
         setPersons(persons = [...persons, person])
+        notifyCreate()
 
     }
     return (
@@ -59,6 +71,16 @@ const AddButton = ({ persons, setPersons }) => {
                         className='user-list__add-btn modal__btn' />
                 </form>
             </Modal>
+            <ToastContainer
+                position="bottom-right"
+                autoClose={3000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover />
         </div >
 
     )
