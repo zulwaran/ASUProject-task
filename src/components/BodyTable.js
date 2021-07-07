@@ -1,23 +1,6 @@
 import React from 'react'
+import { useEffect, useState } from "react"
 import { FaTimes, FaUser, FaPen } from 'react-icons/fa'
-
-const users = [
-    {
-        id: 1,
-        firstName: 'Михаил',
-        lastName: 'Абрамов',
-    },
-    {
-        id: 2,
-        firstName: 'Елена',
-        lastName: 'Солнцева',
-    },
-    {
-        id: 3,
-        firstName: 'Гриша',
-        lastName: 'Поляков',
-    }
-]
 
 const deleteUser = (id) => {
     console.log('delete', id)
@@ -28,31 +11,48 @@ const updateUser = (id) => {
 }
 
 const BodyTable = () => {
+    const [persons, setPersons] = useState([])
+
+    useEffect(() => {
+        const getPersons = async () => {
+            const persons = await fetchPersons()
+            setPersons(persons)
+        }
+        getPersons()
+    }, [])
+
+    //Get persons list
+    const fetchPersons = async () => {
+        const res = await fetch('http://localhost:5000/persons')
+        const data = await res.json()
+        return data
+    }
+
     return (
         <>
-            {users.map((user) => (
-                <tr key={user.id}>
+            {persons.map((person) => (
+                <tr key={person.id}>
                     <td className="user-list__table-icon">
                         <FaUser
                             style={{ color: 'gray' }}
                         />
                     </td>
                     <td>
-                        {user.firstName}
+                        {person.firstName}
                     </td>
                     <td>
-                        {user.lastName}
+                        {person.lastName}
                     </td>
                     <td>
                         <FaPen
                             style={{ color: 'gray', cursor: 'pointer' }}
-                            onClick={() => updateUser(user.id)}
+                            onClick={() => updateUser(person.id)}
                         />
                     </td>
                     <td>
                         <FaTimes
                             style={{ color: 'red', cursor: 'pointer' }}
-                            onClick={() => deleteUser(user.id)}
+                            onClick={() => deleteUser(person.id)}
                         />
                     </td>
                 </tr>
