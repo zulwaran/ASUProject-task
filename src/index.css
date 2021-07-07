@@ -1,0 +1,52 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+}
+
+.container {
+    overflow: auto;
+    min-height: 300px;
+    margin: 0 10px;
+}
+
+.user-list {
+    max-width: 800px;
+    margin: 30px auto;
+}
+
+.user-list__table {
+    margin: 30px auto;
+    width: 100%;
+}
+
+.user-list__table-header {
+    text-align: left;
+    background-color: #f2f1f1;
+}
+
+.user-list__table tr {
+    border-bottom: 1px solid black;
+}
+
+.user-list__table th, td {
+    padding: 10px 0;
+    border-bottom: 1px solid black;
+}
+
+.user-list__table-icon {
+    text-align: center;
+}
+
+.user-list__add-btn {
+    background-color: #2196f3;
+    color: white;
+    padding: 10px;
+    border: 0;
+    border-radius: 10px;
+    cursor: pointer;
+}

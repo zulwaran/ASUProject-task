@@ -1,8 +1,21 @@
+import HeaderTable from "./components/HeaderTable"
+import BodyTable from "./components/BodyTable"
+import AddButton from "./components/AddButton"
+
 const App = () => {
     return (
-        <div>
-
+        <div className='container'>
+            <div className='user-list'>
+                <table className='user-list__table' cellSpacing="0">
+                    <HeaderTable />
+                    <tbody>
+                        <BodyTable />
+                    </tbody>
+                </table>
+                <AddButton />
+            </div>
         </div>
+
     )
 }
 
