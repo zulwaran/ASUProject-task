@@ -1,4 +1,5 @@
 import React from 'react'
+import Modal from "../Modal/Modal"
 import { useEffect, useState } from "react"
 import { FaTimes, FaUser, FaPen } from 'react-icons/fa'
 
@@ -8,6 +9,7 @@ const updateUser = (id) => {
 }
 
 const BodyTable = () => {
+    const [modalActive, setModalActive] = useState(false)
     const [persons, setPersons] = useState([])
 
     useEffect(() => {
@@ -35,33 +37,38 @@ const BodyTable = () => {
 
     return (
         <>
-            {persons.map((person) => (
-                <tr key={person.id}>
-                    <td className="user-list__table-icon">
-                        <FaUser
-                            style={{ color: 'gray' }}
-                        />
-                    </td>
-                    <td>
-                        {person.firstName}
-                    </td>
-                    <td>
-                        {person.lastName}
-                    </td>
-                    <td>
-                        <FaPen
-                            style={{ color: 'gray', cursor: 'pointer' }}
-                            onClick={() => updateUser(person.id)}
-                        />
-                    </td>
-                    <td>
-                        <FaTimes
-                            style={{ color: 'red', cursor: 'pointer' }}
-                            onClick={() => deletePerson(person.id)}
-                        />
-                    </td>
-                </tr>
-            ))}
+            <tbody>
+                {persons.map((person) => (
+                    <tr key={person.id}>
+                        <td className="user-list__table-icon">
+                            <FaUser
+                                style={{ color: 'gray' }}
+                            />
+                        </td>
+                        <td>
+                            {person.firstName}
+                        </td>
+                        <td>
+                            {person.lastName}
+                        </td>
+                        <td>
+                            <FaPen
+                                style={{ color: 'gray', cursor: 'pointer' }}
+                                onClick={() => setModalActive(true)}
+                            />
+                        </td>
+                        <td>
+                            <FaTimes
+                                style={{ color: 'red', cursor: 'pointer' }}
+                                onClick={() => deletePerson(person.id)}
+                            />
+                        </td>
+                    </tr>
+                ))}
+            </tbody>
+            <Modal active={modalActive} setActive={setModalActive}>
+                <p>Редактировать пользователя</p>
+            </Modal>
         </>
     )
 }

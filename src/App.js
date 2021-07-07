@@ -8,9 +8,7 @@ const App = () => {
             <div className='user-list'>
                 <table className='user-list__table' cellSpacing="0">
                     <HeaderTable />
-                    <tbody>
-                        <BodyTable />
-                    </tbody>
+                    <BodyTable />
                 </table>
                 <AddButton />
             </div>
@@ -18,5 +16,4 @@ const App = () => {
 
     )
 }
-
 export default App
