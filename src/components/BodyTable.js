@@ -13,32 +13,76 @@ const BodyTable = ({ persons, setPersons }) => {
     const [firstName, setFirstName] = useState("")
     const [lastName, setLastName] = useState("")
     const [id, setPersonId] = useState()
-    const notifyUpdate = () => toast.success("Данные обновлены", {
-        position: "bottom-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-    });
-    const notifyDelete = () => toast.success("Пользователь удален", {
-        position: "bottom-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
+    const notify = ((status) => {
+        console.log("status=", status)
+        switch (status) {
+            case status = 201:
+                toast.success("Пользователь добавлен", {
+                    position: "bottom-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
+                break;
+            case status = 200:
+                toast.success("Успешное выполнение запроса", {
+                    position: "bottom-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
+                break;
+            case status = 400:
+                toast.error("Неверный запрос", {
+                    position: "bottom-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
+                break;
+            case status = 404:
+                toast.error("Сущность не найдена в системе", {
+                    position: "bottom-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
+                break;
+            case status = 500:
+                toast.error("Серверная ошибка", {
+                    position: "bottom-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
+                break;
+            default:
+                break;
+        }
     });
 
     //Deleted person
     const deletePerson = async (id) => {
-        await fetch(`http://localhost:5000/persons/${id}`, {
+        const res = await fetch(`http://localhost:5000/persons/${id}`, {
             method: 'DELETE',
         })
         setPersons(persons.filter((person) => person.id !== id))
-        notifyDelete()
+        notify(res.status)
     }
 
     //Update person data
@@ -51,7 +95,7 @@ const BodyTable = ({ persons, setPersons }) => {
             firstName: firstName,
             lastName: lastName,
         }
-        await fetch(`http://localhost:5000/persons/${id}`, {
+        const res = await fetch(`http://localhost:5000/persons/${id}`, {
             method: 'PUT',
             headers: {
                 'Content-type': 'application/json',
@@ -59,7 +103,7 @@ const BodyTable = ({ persons, setPersons }) => {
             body: JSON.stringify(person),
         })
         fetchPersons()
-        notifyUpdate()
+        notify(res.status)
     }
 
 
